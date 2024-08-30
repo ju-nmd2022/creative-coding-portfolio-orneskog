@@ -1,7 +1,12 @@
 [
   {
-    "file": "experiments/example.js",
-    "name": "Name of your experiment",
-    "description": "Explains the what and the why. What is the main idea? What is the purpose? Describes the coding process and implementation choices and gives a high level system overview."
+    "file": "experiments/square-structure-1.js",
+    "name": "Square Structure 1",
+    "description": "Trying out functions to be able to continue with other experiments. Variations of warm colors, flickering on a dark blue background."
+  },
+  {
+    "file": "experiments/square-structure-2.js",
+    "name": "Square Structure 2",
+    "description": "Trying out functions to be able to continue with other experiments. Variations of warm colors, flickering on a dark blue background."
   }
 ]
