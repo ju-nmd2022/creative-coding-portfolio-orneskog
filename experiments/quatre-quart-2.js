@@ -4,8 +4,7 @@ let step = 20;
 let aThirdOfHeight;
 
 function setup() {
-  let size = windowWidth;
-  createCanvas(size, size);
+  createCanvas(windowWidth, windowHeight);
   strokeWeight(1);
   strokeCap(ROUND);
   aThirdOfHeight = height / 3;
