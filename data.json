@@ -8,5 +8,15 @@
     "file": "experiments/square-structure-2.js",
     "name": "Square Structure 2",
     "description": "Trying out functions to be able to continue with other experiments. Variations of warm colors, flickering on a dark blue background."
+  },
+  {
+    "file": "experiments/sand-traveler-1.js",
+    "name": "Sand Traveler 1",
+    "description": "Testing out Boids Model with Jared Tarbell's Sand Traveler as inspiration."
+  },
+  {
+    "file": "experiments/square-structure-2.js",
+    "name": "Sand Traveler 2",
+    "description": "Testing out Flow Fields with Jared Tarbell's Sand Traveler as inspiration."
   }
 ]
