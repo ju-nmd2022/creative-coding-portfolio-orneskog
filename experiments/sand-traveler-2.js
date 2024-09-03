@@ -1,17 +1,109 @@
-//Used Garrit's example of flow fields as a base
+// Used Garrit's example of Boids Model as a base
+// Used some code from Daniel Shiffmans Nature of code: https://github.com/nature-of-code/noc-examples-p5.js/blob/master/chp06_agents/NOC_6_09_Flocking/boid.js
 
-class Agent {
+class Boid {
   constructor(x, y, maxSpeed, maxForce) {
     this.position = createVector(x, y);
     this.lastPosition = createVector(x, y);
     this.acceleration = createVector(0, 0);
-    this.velocity = createVector(0, 0);
+    this.velocity = createVector(random(-1, 1), random(-1, 1));
     this.maxSpeed = maxSpeed;
     this.maxForce = maxForce;
   }
 
-  follow(desiredDirection) {
-    desiredDirection = desiredDirection.copy();
+  flock(boids) {
+    let separation = this.separate(boids);
+    let align = this.align(boids);
+    let cohesion = this.cohesion(boids);
+
+    // You can play with this values to change the behavior
+    separation.mult(1.0);
+    align.mult(0.5);
+    //   cohesion.mult(1.0);
+
+    this.applyForce(separation);
+    this.applyForce(align);
+    this.applyForce(cohesion);
+  }
+
+  separate(boids) {
+    let desiredseparation = 25.0;
+    let steer = createVector(0, 0);
+    let count = 0;
+    // For every boid in the system, check if it's too close
+    for (let i = 0; i < boids.length; i++) {
+      let d = p5.Vector.dist(this.position, boids[i].position);
+      // If the distance is greater than 0 and less than an arbitrary amount (0 when you are yourself)
+      if (d > 0 && d < desiredseparation) {
+        // Calculate vector pointing away from neighbor
+        let diff = p5.Vector.sub(this.position, boids[i].position);
+        diff.normalize();
+        diff.div(d); // Weight by distance
+        steer.add(diff);
+        count++; // Keep track of how many
+      }
+    }
+    // Average -- divide by how many
+    if (count > 0) {
+      steer.div(count);
+    }
+
+    // As long as the vector is greater than 0
+    if (steer.mag() > 1) {
+      // Implement Reynolds: Steering = Desired - Velocity
+      steer.normalize();
+      steer.mult(this.maxSpeed);
+      steer.sub(this.velocity);
+      steer.limit(this.maxForce);
+    }
+    return steer;
+  }
+
+  align(boids) {
+    let neighbordist = 50;
+    let sum = createVector(0, 0);
+    let count = 0;
+    for (let i = 0; i < boids.length; i++) {
+      let d = p5.Vector.dist(this.position, boids[i].position);
+      if (d > 0 && d < neighbordist) {
+        sum.add(boids[i].velocity);
+        count++;
+      }
+    }
+    if (count > 0) {
+      sum.div(count);
+      sum.normalize();
+      sum.mult(this.maxSpeed);
+      let steer = p5.Vector.sub(sum, this.velocity);
+      steer.limit(this.maxForce);
+      return steer;
+    } else {
+      return createVector(0, 0);
+    }
+  }
+
+  cohesion(boids) {
+    let neighbordist = 50;
+    let sum = createVector(0, 0); // Start with empty vector to accumulate all locations
+    let count = 0;
+    for (let i = 0; i < boids.length; i++) {
+      let d = p5.Vector.dist(this.position, boids[i].position);
+      if (d > 0 && d < neighbordist) {
+        sum.add(boids[i].position); // Add location
+        count++;
+      }
+    }
+    if (count > 0) {
+      sum.div(count);
+      return this.seek(sum); // Steer towards the location
+    } else {
+      return createVector(0, 0);
+    }
+  }
+
+  seek(target) {
+    let desiredDirection = p5.Vector.sub(target, this.position);
+    desiredDirection.normalize();
     desiredDirection.mult(this.maxSpeed);
     let steer = p5.Vector.sub(desiredDirection, this.velocity);
     steer.limit(this.maxForce);
@@ -50,68 +142,44 @@ class Agent {
 
   draw() {
     push();
-    stroke(30, satValue % 50, 80);
-    strokeWeight(1);
-    line(
-      this.lastPosition.x,
-      this.lastPosition.y,
-      this.position.x,
-      this.position.y
-    );
+    noStroke();
+    // Got help from chatGPT to get the colors to loop with % + max value, a modulo operator
+    fill(hueValue % 70, satValue % 50, 100);
+    ellipse(this.position.x, this.position.y, 1.5);
     pop();
   }
 }
 
 function setup() {
   createCanvas(innerWidth, innerHeight);
-  colorMode(HSB); // Color mode changed for easy smooth color variations
-  background(100);
-  field = generateField();
   generateAgents();
-}
-
-function generateField() {
-  let field = [];
-  noiseSeed(Math.random() * 100);
-  for (let x = 0; x < maxCols; x++) {
-    field.push([]);
-    for (let y = 0; y < maxRows; y++) {
-      const value = noise(x / divider, y / divider) * Math.PI * 2;
-      field[x].push(p5.Vector.fromAngle(value));
-    }
-  }
-  return field;
+  colorMode(HSB); // Color mode changed for easy smooth color variations
+  background(0);
 }
 
 function generateAgents() {
-  for (let i = 0; i < 30; i++) {
-    let agent = new Agent(
+  for (let i = 0; i < 100; i++) {
+    let boid = new Boid(
       Math.random() * innerWidth,
       Math.random() * innerHeight,
-      4,
-      0.1
+      3,
+      0.05
     );
-    agents.push(agent);
+    boids.push(boid);
   }
 }
 
-const fieldSize = 50;
-const maxCols = Math.ceil(innerWidth / fieldSize);
-const maxRows = Math.ceil(innerHeight / fieldSize);
-const divider = 4;
-let field;
-let agents = [];
+let boids = [];
+let hueValue = 0; // Global variable for color change
 let satValue = 0; // Global variable for color change
 
 function draw() {
+  hueValue += 1; // Increment hueValue each frame
   satValue += 1; // Increment satValue each frame
-  for (let agent of agents) {
-    const x = Math.floor(agent.position.x / fieldSize);
-    const y = Math.floor(agent.position.y / fieldSize);
-    const desiredDirection = field[x][y];
-    agent.follow(desiredDirection);
-    agent.update();
-    agent.checkBorders();
-    agent.draw();
+  for (let boid of boids) {
+    boid.flock(boids);
+    boid.update();
+    boid.checkBorders();
+    boid.draw();
   }
 }
