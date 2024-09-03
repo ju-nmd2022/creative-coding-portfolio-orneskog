@@ -149,7 +149,6 @@ class Boid {
     pop();
   }
 }
-
 function setup() {
   createCanvas(innerWidth, innerHeight);
   generateAgents();

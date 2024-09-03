@@ -51,7 +51,6 @@ class Agent {
   draw() {
     push();
     stroke(30, satValue % 50, 80);
-    strokeWeight(1);
     line(
       this.lastPosition.x,
       this.lastPosition.y,
@@ -84,7 +83,7 @@ function generateField() {
 }
 
 function generateAgents() {
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 50; i++) {
     let agent = new Agent(
       Math.random() * innerWidth,
       Math.random() * innerHeight,
@@ -105,6 +104,7 @@ let satValue = 0; // Global variable for color change
 
 function draw() {
   satValue += 1; // Increment satValue each frame
+
   for (let agent of agents) {
     const x = Math.floor(agent.position.x / fieldSize);
     const y = Math.floor(agent.position.y / fieldSize);
