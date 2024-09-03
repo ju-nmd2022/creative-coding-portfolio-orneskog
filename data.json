@@ -18,5 +18,20 @@
     "file": "experiments/square-structure-2.js",
     "name": "Sand Traveler 2",
     "description": "Testing out Boids Model with Jared Tarbell's Sand Traveler as inspiration."
+  },
+  {
+    "file": "experiments/square-structure-3.js",
+    "name": "Sand Traveler 3",
+    "description": "Testing out Boids Model with Jared Tarbell's Sand Traveler as inspiration and tweaking it a lot."
+  },
+  {
+    "file": "experiments/quatre-quart-1.js",
+    "name": "Quatre Quart RD 1",
+    "description": "Recreation of Vera Molnar's Quatre Quarts RD."
+  },
+  {
+    "file": "experiments/quatre-quart-2.js",
+    "name": "Quatre Quart RD 1",
+    "description": "Recreation of Vera Molnar's Quatre Quarts RD. Make it rain! 💰"
   }
 ]
