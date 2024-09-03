@@ -1,4 +1,4 @@
-// Used Garrit's example of
+// Used Garrit's example of Boids Model as a base
 // Used some code from Daniel Shiffmans Nature of code: https://github.com/nature-of-code/noc-examples-p5.js/blob/master/chp06_agents/NOC_6_09_Flocking/boid.js
 
 class Boid {
@@ -142,17 +142,10 @@ class Boid {
 
   draw() {
     push();
-    // stroke(0, 0, 0, 40);
-    // strokeWeight(1);
-    // line(
-    //   this.lastPosition.x,
-    //   this.lastPosition.y,
-    //   this.position.x,
-    //   this.position.y
-    // );
     noStroke();
-    fill(0);
-    ellipse(this.position.x, this.position.y, 1);
+    // Got help from chatGPT to get the colors to loop with % + max value, a modulo operator
+    fill(hueValue % 70, satValue % 50, 100);
+    ellipse(this.position.x, this.position.y, 1.5);
     pop();
   }
 }
@@ -160,7 +153,8 @@ class Boid {
 function setup() {
   createCanvas(innerWidth, innerHeight);
   generateAgents();
-  colorMode(HSB); //Color mode changed for easier color change
+  colorMode(HSB); // Color mode changed for easy smooth color variations
+  background(0);
 }
 
 function generateAgents() {
@@ -176,9 +170,12 @@ function generateAgents() {
 }
 
 let boids = [];
+let hueValue = 0; // Global variable for color change
+let satValue = 0; // Global variable for color change
 
 function draw() {
-  // background(255, 255, 255);
+  hueValue += 1; // Increment hueValue each frame
+  satValue += 1; // Increment satValue each frame
   for (let boid of boids) {
     boid.flock(boids);
     boid.update();
