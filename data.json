@@ -10,6 +10,11 @@
     "description": "Trying out functions to be able to continue with other experiments. Variations of warm colors, flickering on a dark blue background."
   },
   {
+    "file": "experiments/square-structure-3.js",
+    "name": "Square Structure 3",
+    "description": "Increasing number of vertexes. Trying out functions to be able to continue with other experiments. Variations of warm colors, flickering on a dark blue background."
+  },
+  {
     "file": "experiments/sand-traveler-1.js",
     "name": "Sand Traveler 1",
     "description": "Testing out Flow Fields with Jared Tarbell's Sand Traveler as inspiration."
