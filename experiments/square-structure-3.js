@@ -60,8 +60,7 @@ function drawLayers(x, y, size, layers) {
 function draw() {
   background(0);
 
-  // Rita ut alla lager i ett rutnät
-
+  //display all layers in the grid
   for (let y = 0; y < 10; y++) {
     for (let x = 0; x < 10; x++) {
       drawLayers(size / 2 + x * size, size / 2 + y * size, size, layers);
