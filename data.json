@@ -1,5 +1,10 @@
 [
   {
+    "file": "experiments/tonejs-piano.js",
+    "name": "ToneJS Piano",
+    "description": "Click the keys on the piano to play."
+  },
+  {
     "file": "experiments/square-structure-1.js",
     "name": "Square Structure 1",
     "description": "Trying out functions to be able to continue with other experiments. Variations of warm colors, flickering on a dark blue background."
