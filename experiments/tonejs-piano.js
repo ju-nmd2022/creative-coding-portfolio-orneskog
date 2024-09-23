@@ -1,6 +1,6 @@
-//Used Garrit's code about the MonoSynth and also the code example for Fast Fourier Transformation
-//Used ChatGPT to get the mousePressed command to work
-//Also used ChatGPT to get the FFT to work together with my previous code and to get it to be displayed
+/*Used Garrit's code about the MonoSynth and also the code example for Fast Fourier Transformation
+Used ChatGPT to get the mousePressed command to work
+Also used ChatGPT to get the FFT to work together with my previous code and to get it to be displayed and also for it to work with the sound from my keys */
 
 let synth;
 let notes = [
