@@ -1,5 +1,6 @@
-//Used Garrit's code about the MonoSynth
+//Used Garrit's code about the MonoSynth and also the code example for Fast Fourier Transformation
 //Used ChatGPT to get the mousePressed command to work
+//Also used ChatGPT to get the FFT to work together with my previous code and to get it to be displayed
 
 let synth;
 let notes = [
@@ -26,16 +27,20 @@ let notes = [
   "B4",
   "C5",
 ];
+let analyser, gain;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   synth = new Tone.MonoSynth().toDestination();
+  gain = new Tone.Gain(1).toDestination();
+  analyser = new Tone.Analyser("fft", 4096);
+  synth.connect(gain);
+  gain.connect(analyser);
   Tone.start();
-  noLoop();
 }
 
 function draw() {
-  background(220);
+  background(80);
   noStroke();
   let rectWidth = windowWidth / notes.length;
   //Setting a base color saturation to max to later change it in the for-loop
@@ -48,6 +53,19 @@ function draw() {
     fill(0, 0, 0, colorSat);
     rect(x, 0, rectWidth, windowHeight);
   }
+
+  // Visualize the FFT curve (Got help from ChatGPT and Garrit's FFT Code)
+  let fftValues = analyser.getValue();
+  noFill();
+  strokeWeight(5);
+  stroke(0, 255, 0, 100);
+
+  beginShape();
+  for (let i = 0; i < fftValues.length; i++) {
+    let v = map(fftValues[i], -100, 0, height, 0);
+    vertex(i * (width / fftValues.length) * 2, v / 2);
+  }
+  endShape();
 }
 
 function mousePressed() {
