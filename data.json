@@ -1,5 +1,10 @@
 [
   {
+    "file": "experiments/tonejs-bounce.js",
+    "name": "ToneJS Bounce",
+    "description": "Click anywhere on the screen to start the amazing magic sounds. ✨"
+  },
+  {
     "file": "experiments/tonejs-piano.js",
     "name": "ToneJS Piano",
     "description": "Click the grey keys on the piano on the screen to play."
