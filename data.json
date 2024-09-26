@@ -2,7 +2,7 @@
   {
     "file": "experiments/tonejs-bounce.js",
     "name": "ToneJS Bounce",
-    "description": "Click anywhere on the screen to start the amazing magic sounds. ✨"
+    "description": "Start by clicking on the screen and move the cursor to make the ball bounce at the walls. ✨Beautiful tones will play!✨"
   },
   {
     "file": "experiments/tonejs-piano.js",
